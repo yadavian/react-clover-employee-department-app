@@ -1,0 +1,41 @@
+{
+  "employees": [
+    {
+      "name": "ankit yadav",
+      "salary": "200",
+      "designation": "Software Engineer",
+      "department": "Information Technology",
+      "id": 5
+    }
+  ],
+  "department": [
+    {
+      "id": 1,
+      "name": "Information Technology"
+    },
+    {
+      "id": 2,
+      "name": "Human Resource"
+    },
+    {
+      "id": 3,
+      "name": "Accounts Department"
+    },
+    {
+      "id": 4,
+      "name": "Marketing Department"
+    },
+    {
+      "id": 5,
+      "name": "Operations Department"
+    },
+    {
+      "id": 6,
+      "name": "Finance Department"
+    },
+    {
+      "id": 7,
+      "name": "Sales Department"
+    }
+  ]
+}

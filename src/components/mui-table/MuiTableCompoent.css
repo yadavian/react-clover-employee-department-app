@@ -1,0 +1,20 @@
+.edit-icon {
+    color: white;
+    background-color: var(--dark-purple);
+    border: 1px solid var(--dark-purple);
+    padding: 0.2rem 0.5rem;
+    border-top-left-radius: 0.3rem;
+    border-bottom-left-radius: 0.3rem;
+    cursor: pointer;
+}
+
+
+.delete-icon {
+    color: red;
+    border: 1px solid var(--dark-purple);
+    padding: 0.2rem 0.5rem;
+    border-left-width: 0px;
+    border-top-right-radius: 0.3rem;
+    cursor: pointer;
+    border-bottom-right-radius: 0.3rem;
+}

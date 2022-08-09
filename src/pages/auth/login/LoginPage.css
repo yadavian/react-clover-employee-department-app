@@ -1,0 +1,22 @@
+.div-heading {
+    font-size: 1rem;
+    font-weight: bold;
+    background-color: orangered;
+    color: white;
+    max-width: max-content;
+    padding: 0.5rem 1rem;
+    margin-bottom: 1.5rem;
+    margin-left: -5rem;
+    border-bottom-left-radius: 1rem;
+}
+
+
+/* // Mobile */
+@media screen and (max-width: 600px) {
+    .form-container {
+        width: 100%;
+    }
+}
+
+/* //Desktop */
+@media screen and (min-width: 600px) {}
