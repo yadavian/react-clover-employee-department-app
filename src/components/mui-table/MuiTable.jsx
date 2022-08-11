@@ -25,10 +25,6 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import ModeEditOutlineIcon from "@mui/icons-material/ModeEditOutline";
 import "./MuiTableCompoent.css";
 import { Link } from "react-router-dom";
-import {
-  deleteEmployee,
-  employeeServices,
-} from "../../services/employeeServices.js";
 
 // function createData(name, calories, fat, carbs, protein) {
 //   return {
@@ -249,7 +245,7 @@ EnhancedTableToolbar.propTypes = {
 };
 
 export default function MuiTable(props) {
-  const { rows, headCells, deleteEmployee } = props;
+  const { rows, headCells, deleteUser, entity = "employee" } = props;
   const [order, setOrder] = React.useState("asc");
   const [orderBy, setOrderBy] = React.useState("calories");
   const [selected, setSelected] = React.useState([]);
@@ -344,16 +340,18 @@ export default function MuiTable(props) {
                   console.log(employeeID, name, designation, department);
 
                   return (
-                    <TableRow
-                      hover
-                      onClick={(event) => handleClick(event, row.name)}
-                      role="checkbox"
-                      aria-checked={isItemSelected}
-                      tabIndex={-1}
-                      key={row.name}
-                      selected={isItemSelected}
-                    >
-                      {/* <TableCell padding="checkbox">
+                    <>
+                      {entity == "employee" && (
+                        <TableRow
+                          hover
+                          onClick={(event) => handleClick(event, row.name)}
+                          role="checkbox"
+                          aria-checked={isItemSelected}
+                          tabIndex={-1}
+                          key={row.name}
+                          selected={isItemSelected}
+                        >
+                          {/* <TableCell padding="checkbox">
                         <Checkbox
                           color="primary"
                           checked={isItemSelected}
@@ -362,7 +360,7 @@ export default function MuiTable(props) {
                           }}
                         />
                       </TableCell> */}
-                      {/* <TableCell
+                          {/* <TableCell
                         component="th"
                         id={labelId}
                         scope="row"
@@ -370,57 +368,117 @@ export default function MuiTable(props) {
                       >
                         {row.employeeID}
                       </TableCell>  */}
-                      <TableCell align="center">{row.id}</TableCell>
-                      <TableCell
-                        align="center"
-                        style={{ textTransform: "capitalize" }}
-                      >
-                        {row.name}
-                      </TableCell>
-                      <TableCell
-                        align="center"
-                        style={{ textTransform: "capitalize" }}
-                      >
-                        {row.designation}
-                      </TableCell>
-                      <TableCell
-                        align="center"
-                        style={{ textTransform: "capitalize" }}
-                      >
-                        {row.department}
-                      </TableCell>
-                      <TableCell align="center">
-                        <div
-                          style={{
-                            display: "flex",
-                            justifyContent: "center",
-                          }}
-                        >
-                          <Link to={`/add-employee/${row.id}`}>
-                            <div className="edit-icon">
-                              <ModeEditOutlineIcon />
-                            </div>
-                          </Link>
-                          {/* <Link to="/add-employee"> */}
-                          <div
-                            className="delete-icon"
-                            onClick={() => {
-                              deleteEmployee(row.id);
-                            }}
+                          <TableCell align="center">{row.id}</TableCell>
+                          <TableCell
+                            align="center"
+                            style={{ textTransform: "capitalize" }}
                           >
-                            <DeleteIcon />
-                          </div>
-                          {/* </Link> */}
+                            {row.name}
+                          </TableCell>
+                          <TableCell align="center">{row.salary}</TableCell>
+                          <TableCell
+                            align="center"
+                            style={{ textTransform: "capitalize" }}
+                          >
+                            {row.designation}
+                          </TableCell>
+                          <TableCell
+                            align="center"
+                            style={{ textTransform: "capitalize" }}
+                          >
+                            {row.department}
+                          </TableCell>
+                          <TableCell align="center">
+                            <div
+                              style={{
+                                display: "flex",
+                                justifyContent: "center",
+                              }}
+                            >
+                              <Link to={`/add-employee/${row.id}`}>
+                                <div className="edit-icon">
+                                  <ModeEditOutlineIcon />
+                                </div>
+                              </Link>
+                              {/* <Link to="/add-employee"> */}
+                              <div
+                                className="delete-icon"
+                                onClick={() => {
+                                  deleteUser(row.id);
+                                }}
+                              >
+                                <DeleteIcon />
+                              </div>
+                              {/* </Link> */}
 
-                          {/* <DeleteIcon
+                              {/* <DeleteIcon
                             style={{ color: "red", border: "1px solid black" }}
                           />
                           <ModeEditOutlineIcon
                             style={{ color: "blue", border: "1px solid black" }}
                           /> */}
-                        </div>
-                      </TableCell>
-                    </TableRow>
+                            </div>
+                          </TableCell>
+                        </TableRow>
+                      )}
+                      {entity == "department" && (
+                        <TableRow
+                          hover
+                          onClick={(event) => handleClick(event, row.name)}
+                          role="checkbox"
+                          aria-checked={isItemSelected}
+                          tabIndex={-1}
+                          key={row.name}
+                          selected={isItemSelected}
+                        >
+                          <TableCell align="center">{row.id}</TableCell>
+                          <TableCell
+                            align="center"
+                            style={{ textTransform: "capitalize" }}
+                          >
+                            {row.name}
+                          </TableCell>
+                          <TableCell
+                            align="center"
+                            style={{ textTransform: "capitalize" }}
+                          >
+                            {row.address}
+                          </TableCell>
+
+                          <TableCell align="center">
+                            <div
+                              style={{
+                                display: "flex",
+                                justifyContent: "center",
+                              }}
+                            >
+                              <Link to={`/add-department/${row.id}`}>
+                                <div className="edit-icon">
+                                  <ModeEditOutlineIcon />
+                                </div>
+                              </Link>
+                              {/* <Link to="/add-employee"> */}
+                              <div
+                                className="delete-icon"
+                                onClick={() => {
+                                  deleteUser(row.id);
+                                }}
+                              >
+                                <DeleteIcon />
+                              </div>
+                              {/* </Link> */}
+
+                              {/* <DeleteIcon
+                            style={{ color: "red", border: "1px solid black" }}
+                          />
+                          <ModeEditOutlineIcon
+                            style={{ color: "blue", border: "1px solid black" }}
+                          /> */}
+                            </div>
+                          </TableCell>
+                        </TableRow>
+                      )}
+                    </>
                   );
                 })}
               {emptyRows > 0 && (

@@ -10,7 +10,8 @@
 
 
 .delete-icon {
-    color: red;
+    color: white;
+    background-color: red;
     border: 1px solid var(--dark-purple);
     padding: 0.2rem 0.5rem;
     border-left-width: 0px;

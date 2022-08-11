@@ -5,8 +5,12 @@ import SnackbarComponent from "../../../components/snackbar/SnackbarComponent";
 import "./LoginPage.css";
 import { useNavigate } from "react-router-dom";
 import { useMediaQuery } from "@mui/material";
+import toast from "react-hot-toast";
+import { useDispatch } from "react-redux";
+import { hideLoading, showLoading } from "../../../redux/slices/homeSlice";
 
 const LoginPage = () => {
+  const dispatch = useDispatch();
   const isMobile = useMediaQuery("(max-width:600px)");
   console.log(isMobile);
 
@@ -27,12 +31,24 @@ const LoginPage = () => {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
+    dispatch(showLoading());
     console.log(loginInfo);
+
+    if (loginInfo.email == "admin" && loginInfo.password == "123") {
+      // alert("correct login credentials.");
+      dispatch(hideLoading());
+      toast.success("logged in, redirecting to dashboard.");
+      navigate("/employee-dashboard");
+    } else {
+      toast.error("incorrect creadentials.");
+      dispatch(hideLoading());
+      // alert("incorrect creadentials.");
+    }
   };
 
   const handleLogin = () => {
     handleSnackbar();
-    navigate("/employee-dashboard");
+    // navigate("/employee-dashboard");
   };
 
   return (
@@ -81,7 +97,7 @@ const LoginPage = () => {
                       <button
                         type="submit"
                         className="custom-button"
-                        onClick={handleLogin}
+                        // onClick={handleLogin}
                       >
                         Submit
                       </button>

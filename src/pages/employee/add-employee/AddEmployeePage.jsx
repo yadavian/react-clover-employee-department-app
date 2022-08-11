@@ -15,8 +15,12 @@ import {
 } from "react-router-dom";
 import { getDepartments } from "../../../services/departmentService";
 import { designation } from "../../../data/employeeData";
+import toast from "react-hot-toast";
+import { hideLoading, showLoading } from "../../../redux/slices/homeSlice";
+import { useDispatch } from "react-redux";
 
 const AddEmployeePage = () => {
+  const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
   const { id } = useParams();
@@ -36,22 +40,31 @@ const AddEmployeePage = () => {
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
+    dispatch(showLoading());
     console.log(employeeInfo);
     if (id) {
       const response = await editEmployee(employeeInfo, id);
       if (response.status == 201 || response.status == 200) {
-        alert("updated employee");
+        // alert("updated employee");
+        toast.success("updated employee.");
+        dispatch(hideLoading());
         navigate("/employee-dashboard");
       } else {
-        alert("something went wrong with update !");
+        // alert("something went wrong with update !");
+        toast.error("something went wrong with update !");
+        dispatch(hideLoading());
       }
     } else {
       const response = await addEmployee(employeeInfo);
       if (response.status == 201) {
-        alert("added employee");
+        // alert("added employee");
+        toast.success("added employee");
+        dispatch(hideLoading());
         navigate("/employee-dashboard");
       } else {
-        alert("something went wrong !");
+        // alert("something went wrong !");
+        toast.error("something went wrong !");
+        dispatch(hideLoading());
       }
     }
   };

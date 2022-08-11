@@ -7,11 +7,15 @@ import {
   deleteEmployee,
   getEmployees,
 } from "../../../services/employeeServices";
+import {
+  deleteDepartment,
+  getDepartments,
+} from "../../../services/departmentService";
 import toast from "react-hot-toast";
 import { hideLoading, showLoading } from "../../../redux/slices/homeSlice";
 import { useDispatch } from "react-redux";
 
-const EmployeeDashboardPage = () => {
+const DepartmentDashboardPage = () => {
   const [rows, setRows] = useState([]);
   const dispatch = useDispatch();
 
@@ -20,31 +24,19 @@ const EmployeeDashboardPage = () => {
       id: "id",
       numeric: false,
       disablePadding: false,
-      label: "Employee ID",
+      label: "Department ID",
     },
     {
       id: "name",
       numeric: false,
       disablePadding: false,
-      label: "Employee Name",
+      label: "Department Name",
     },
     {
-      id: "salary",
+      id: "address",
       numeric: false,
       disablePadding: false,
-      label: "Salary",
-    },
-    {
-      id: "designation",
-      numeric: false,
-      disablePadding: false,
-      label: "Designation",
-    },
-    {
-      id: "department",
-      numeric: false,
-      disablePadding: false,
-      label: "department",
+      label: "Department Address",
     },
     {
       id: "action",
@@ -54,24 +46,24 @@ const EmployeeDashboardPage = () => {
     },
   ];
 
-  const fetchEmployees = async () => {
-    const response = await getEmployees();
+  const fetchDepartment = async () => {
+    const response = await getDepartments();
     setRows(response.data);
   };
 
   useEffect(() => {
     dispatch(showLoading());
-    fetchEmployees();
+    fetchDepartment();
     dispatch(hideLoading());
   }, []);
 
-  const deleteEmployeeData = async (id) => {
+  const deleteDepartmentData = async (id) => {
     dispatch(showLoading());
-    const response = await deleteEmployee(id);
+    const response = await deleteDepartment(id);
     console.log(response);
     if (response.status == 200) {
-      toast.success("deleted successfully.");
-      fetchEmployees();
+      toast.success("department deleted.");
+      fetchDepartment();
     }
     dispatch(hideLoading());
   };
@@ -81,11 +73,11 @@ const EmployeeDashboardPage = () => {
       <MuiTable
         rows={rows}
         headCells={headCells}
-        deleteUser={deleteEmployeeData}
-        entity="employee"
+        deleteUser={deleteDepartmentData}
+        entity="department"
       />
     </Layout>
   );
 };
 
-export default EmployeeDashboardPage;
+export default DepartmentDashboardPage;
