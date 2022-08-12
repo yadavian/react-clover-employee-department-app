@@ -23,28 +23,28 @@ const EmployeeDashboardPage = () => {
       label: "Employee ID",
     },
     {
-      id: "name",
+      id: "empName",
       numeric: false,
       disablePadding: false,
       label: "Employee Name",
     },
     {
-      id: "salary",
+      id: "empSalary",
       numeric: false,
       disablePadding: false,
       label: "Salary",
     },
     {
-      id: "designation",
+      id: "empDesignation",
       numeric: false,
       disablePadding: false,
       label: "Designation",
     },
     {
-      id: "department",
+      id: "deptName",
       numeric: false,
       disablePadding: false,
-      label: "department",
+      label: "Department",
     },
     {
       id: "action",

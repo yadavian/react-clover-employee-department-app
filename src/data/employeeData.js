@@ -1,7 +1,7 @@
 export const designation = [
-  { id: 1, name: "Software Engineer" },
-  { id: 2, name: "Software Tester" },
-  { id: 3, name: "Frontend Developer" },
-  { id: 4, name: "Java Developer" },
-  { id: 5, name: "IT Engineer" },
+  { id: 1, empDesignation: "Software Engineer" },
+  { id: 2, empDesignation: "Software Tester" },
+  { id: 3, empDesignation: "Frontend Developer" },
+  { id: 4, empDesignation: "Java Developer" },
+  { id: 5, empDesignation: "IT Engineer" },
 ];

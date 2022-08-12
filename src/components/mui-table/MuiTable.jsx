@@ -335,9 +335,7 @@ export default function MuiTable(props) {
                 .map((row, index) => {
                   const isItemSelected = isSelected(row.name);
                   const labelId = `enhanced-table-checkbox-${index}`;
-
-                  const { employeeID, name, designation, department } = row;
-                  console.log(employeeID, name, designation, department);
+                  console.log(row);
 
                   return (
                     <>
@@ -373,20 +371,20 @@ export default function MuiTable(props) {
                             align="center"
                             style={{ textTransform: "capitalize" }}
                           >
-                            {row.name}
+                            {row.empName}
                           </TableCell>
-                          <TableCell align="center">{row.salary}</TableCell>
+                          <TableCell align="center">{row.empSalary}</TableCell>
                           <TableCell
                             align="center"
                             style={{ textTransform: "capitalize" }}
                           >
-                            {row.designation}
+                            {row.empDesignation}
                           </TableCell>
                           <TableCell
                             align="center"
                             style={{ textTransform: "capitalize" }}
                           >
-                            {row.department}
+                            {row.deptName}
                           </TableCell>
                           <TableCell align="center">
                             <div
@@ -436,13 +434,13 @@ export default function MuiTable(props) {
                             align="center"
                             style={{ textTransform: "capitalize" }}
                           >
-                            {row.name}
+                            {row.deptName}
                           </TableCell>
                           <TableCell
                             align="center"
                             style={{ textTransform: "capitalize" }}
                           >
-                            {row.address}
+                            {row.deptAddress}
                           </TableCell>
 
                           <TableCell align="center">

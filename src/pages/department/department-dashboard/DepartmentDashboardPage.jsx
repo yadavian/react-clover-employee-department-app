@@ -27,13 +27,13 @@ const DepartmentDashboardPage = () => {
       label: "Department ID",
     },
     {
-      id: "name",
+      id: "depName",
       numeric: false,
       disablePadding: false,
       label: "Department Name",
     },
     {
-      id: "address",
+      id: "deptAddress",
       numeric: false,
       disablePadding: false,
       label: "Department Address",

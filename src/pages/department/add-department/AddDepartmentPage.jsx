@@ -14,8 +14,8 @@ const AddDepartment = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [department, setDepartment] = useState({
-    name: "",
-    address: "",
+    deptName: "",
+    deptAddress: "",
   });
 
   const handleChange = (e) => {
@@ -67,8 +67,8 @@ const AddDepartment = () => {
                     <label>Department Name</label>
                     <input
                       type="text"
-                      name="name"
-                      value={department.name}
+                      name="deptName"
+                      value={department.deptName}
                       onChange={handleChange}
                     />
                   </div>
@@ -76,8 +76,8 @@ const AddDepartment = () => {
                     <label>Department Address</label>
                     <input
                       type="text"
-                      name="address"
-                      value={department.address}
+                      name="deptAddress"
+                      value={department.deptAddress}
                       onChange={handleChange}
                     />
                   </div>

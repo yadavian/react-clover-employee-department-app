@@ -1,0 +1,12 @@
+.mobile-drawer-list {
+    padding: 2rem;
+}
+
+.mobile-drawer-list-title {
+    margin-bottom: 1rem;
+}
+
+.mobile-drawer-list-item {
+    margin: 1rem 0 0 1rem; 
+    padding: 0.1rem 1rem;
+}

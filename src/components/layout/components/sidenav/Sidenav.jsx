@@ -5,18 +5,63 @@ import { useSelector } from "react-redux";
 
 const Sidenav = () => {
   const location = useLocation();
-  console.log(location);
   const home = useSelector((state) => state.home);
-  console.log(home);
+
+  const adminMenu = [
+    {
+      id: 1,
+      title: "Dashboard",
+      pathname: `${
+        home.activeUserType == "employee"
+          ? "/employee-dashboard"
+          : "/department-dashboard"
+      }`,
+      className: `${
+        location.pathname == "/employee-dashboard" ||
+        location.pathname == "/department-dashboard"
+          ? "sidebar-link-item-active"
+          : "sidebar-link-item"
+      }`,
+    },
+    {
+      id: 2,
+      title: `Add ${home.activeUserType}`,
+      pathname: `${
+        home.activeUserType == "department"
+          ? "/add-department"
+          : "/add-employee"
+      }`,
+      className: `${
+        location.pathname == "/add-employee" ||
+        location.pathname == "/add-department"
+          ? "sidebar-link-item-active"
+          : "sidebar-link-item"
+      }`,
+    },
+  ];
+
+  const employeeMenu = [
+    {
+      id: 1,
+      title: "Profile",
+      pathname: "/employee-dashboard",
+      className: `${
+        location.pathname == "/profile"
+          ? "sidebar-link-item-active"
+          : "sidebar-link-item"
+      }`,
+    },
+  ];
+
+  const isAdmin = true;
+  const menuToRendered = isAdmin ? adminMenu : employeeMenu;
   return (
     <>
       <div className="sidenav">
         <div className="sidebar-header">
           <div className="sidebar-upper">
-            <Link to="/">
-              <p>Clover</p>
-            </Link>
-            <p>+</p>
+            <Link to="/">{/* <p>Clover</p> */}</Link>
+            {/* <p>+</p> */}
           </div>
           <div className="sidebar-main-content">
             <img
@@ -26,7 +71,17 @@ const Sidenav = () => {
             <p>Clover Employee App</p>
           </div>
           <div className="sidebar-links">
-            <Link
+            {menuToRendered?.map((d, i) => {
+              return (
+                <Link to={d.pathname}>
+                  <div className={d.className}>
+                    <p style={{ textTransform: "capitalize" }}>{d.title}</p>
+                  </div>
+                </Link>
+              );
+            })}
+
+            {/* <Link
               to={`${
                 home.activeUserType == "employee"
                   ? "/employee-dashboard"
@@ -64,7 +119,7 @@ const Sidenav = () => {
                   ? " Employee"
                   : " Department"}
               </div>
-            </Link>
+            </Link> */}
           </div>
         </div>
       </div>

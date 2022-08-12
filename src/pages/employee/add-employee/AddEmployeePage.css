@@ -52,3 +52,30 @@ select:focus {
     box-shadow: 0px 3px 1px -2px rgb(0 0 0 / 20%),
         0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%);
 }
+
+.input-container>input,
+select,
+option {
+    margin-bottom: 0rem !important;
+}
+
+.input-container {
+    margin-bottom: 3rem;
+}
+
+
+.custom-error-text {
+    color: white;
+    margin: 0;
+    font-size: 0.75rem;
+    margin-top: 3px;
+    text-align: left;
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+    font-weight: 400;
+    line-height: 1.66;
+    letter-spacing: 0.03333em;
+    padding-inline: 1rem;
+    background-color: #ff0808;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+  }

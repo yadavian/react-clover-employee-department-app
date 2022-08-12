@@ -5,7 +5,6 @@ import RegisterPage from "../pages/auth/register/RegisterPage";
 import AddDepartmentPage from "../pages/department/add-department/AddDepartmentPage";
 import DepartmentDashboardPage from "../pages/department/department-dashboard/DepartmentDashboardPage";
 import AddEmployeePage from "../pages/employee/add-employee/AddEmployeePage";
-import EditEmployeePage from "../pages/employee/edit-employee/EditEmployeePage";
 import EmployeeDashboardPage from "../pages/employee/employee-dashboard/EmployeeDashboardPage";
 
 const Routing = () => {

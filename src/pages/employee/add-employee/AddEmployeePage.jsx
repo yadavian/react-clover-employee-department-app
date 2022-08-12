@@ -24,49 +24,86 @@ const AddEmployeePage = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { id } = useParams();
+  const [formErrors, setFormErrors] = useState({});
 
   const [departments, setDepartments] = useState([]);
 
   const [employeeInfo, setEmployeeInfo] = useState({
-    name: "",
-    salary: "",
-    designation: "",
-    department: "",
+    empName: "",
+    empDesignation: "",
+    empSalary: "",
+    deptName: "",
   });
+
+  console.log("employeeInfo => ", employeeInfo);
 
   const handleChange = (e) => {
     setEmployeeInfo({ ...employeeInfo, [e.target.name]: e.target.value });
   };
 
+  const validate = (values) => {
+    let errors = {};
+    console.log(values);
+    const regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+
+    if (!values.empName) {
+      errors.empName = "Employee name required.";
+    }
+
+    if (!values.empSalary) {
+      errors.empSalary = "Employee Salary required.";
+    }
+    console.log("values => ",values)
+    if (values.empDesignation == "") {
+      errors.empDesignation = "Designation required.";
+    }
+    if (values.deptName == "") {
+      errors.deptName = "Department required.";
+    }
+
+    console.log(errors);
+    return errors;
+  };
+
   const handleFormSubmit = async (e) => {
     e.preventDefault();
+    await setFormErrors(validate(employeeInfo));
+    const isEmpty = !Object.values(employeeInfo).every((o) => o !== "");
+    // const isEmpty = await Object.keys(formErrors).length === 0;
+    console.log(Object.keys(formErrors).length === 0);
+    console.log(isEmpty);
+    // return;
     dispatch(showLoading());
-    console.log(employeeInfo);
-    if (id) {
-      const response = await editEmployee(employeeInfo, id);
-      if (response.status == 201 || response.status == 200) {
-        // alert("updated employee");
-        toast.success("updated employee.");
-        dispatch(hideLoading());
-        navigate("/employee-dashboard");
+
+    if (!isEmpty) {
+      if (id) {
+        const response = await editEmployee(employeeInfo, id);
+        if (response.status == 201 || response.status == 200) {
+          // alert("updated employee");
+          toast.success("updated employee.");
+          dispatch(hideLoading());
+          navigate("/employee-dashboard");
+        } else {
+          // alert("something went wrong with update !");
+          toast.error("something went wrong with update !");
+          dispatch(hideLoading());
+        }
       } else {
-        // alert("something went wrong with update !");
-        toast.error("something went wrong with update !");
-        dispatch(hideLoading());
-      }
-    } else {
-      const response = await addEmployee(employeeInfo);
-      if (response.status == 201) {
-        // alert("added employee");
-        toast.success("added employee");
-        dispatch(hideLoading());
-        navigate("/employee-dashboard");
-      } else {
-        // alert("something went wrong !");
-        toast.error("something went wrong !");
-        dispatch(hideLoading());
+        const response = await addEmployee(employeeInfo);
+        if (response.status == 201) {
+          // alert("added employee");
+          toast.success("added employee");
+          dispatch(hideLoading());
+          navigate("/employee-dashboard");
+        } else {
+          // alert("something went wrong !");
+          toast.error("something went wrong !");
+          dispatch(hideLoading());
+        }
       }
     }
+
+    dispatch(hideLoading());
   };
 
   const getEmployeeData = async () => {
@@ -92,10 +129,10 @@ const AddEmployeePage = () => {
   useEffect(() => {
     if (location.pathname == "/add-employee") {
       setEmployeeInfo({
-        name: "",
-        salary: "",
-        designation: "0",
-        department: "0",
+        empName: "",
+        empDesignation: "",
+        empSalary: "",
+        deptName: "",
       });
     }
   }, [location]);
@@ -108,32 +145,42 @@ const AddEmployeePage = () => {
             <div className="form-container">
               <div className="container">
                 <div className="row">
-                  <div className="col-md-6">
+                  <div className="col-md-6 input-container">
                     <label>Name</label>
                     <input
                       type="text"
-                      name="name"
-                      value={employeeInfo.name}
+                      name="empName"
+                      value={employeeInfo.empName}
                       onChange={handleChange}
                     />
+                    {formErrors.empName && (
+                      <p className="custom-error-text">
+                        {formErrors.empName}
+                      </p>
+                    )}
                   </div>
-                  <div className="col-md-6">
+                  <div className="col-md-6 input-container">
                     <label>Salary</label>
                     <input
                       type="text"
-                      name="salary"
-                      value={employeeInfo.salary}
+                      name="empSalary"
+                      value={employeeInfo.empSalary}
                       onChange={handleChange}
                     />
+                    {formErrors.empSalary && (
+                      <p className="custom-error-text">
+                        {formErrors.empSalary}
+                      </p>
+                    )}
                   </div>
-                  <div className="col-md-6">
+                  <div className="col-md-6 input-container">
                     <label>Designation</label>
-                    <select name="designation" onChange={handleChange}>
+                    <select name="empDesignation" onChange={handleChange}>
                       {/* <option value="0">Select Designation</option>  */}
 
                       {id ? (
-                        <option value={employeeInfo.designation}>
-                          {employeeInfo.designation}
+                        <option value={employeeInfo.empDesignation}>
+                          {employeeInfo.empDesignation}
                         </option>
                       ) : (
                         <option value="0">Select Department</option>
@@ -142,41 +189,50 @@ const AddEmployeePage = () => {
                         designation.map((item, index) => {
                           return (
                             <>
-                              <option value={item.name} key={index}>
-                                {item.name}
+                              <option value={item.empDesignation} key={index}>
+                                {item.empDesignation}
                               </option>
                             </>
                           );
                         })}
                     </select>
+                    {formErrors.empDesignation && (
+                      <p className="custom-error-text">
+                        {formErrors.empDesignation}
+                      </p>
+                    )}
                   </div>
-                  <div className="col-md-6">
+                  <div className="col-md-6 input-container">
                     <label>Department</label>
-                    <select name="department" onChange={handleChange}>
+                    <select name="deptName" onChange={handleChange}>
                       {/* <option value="0">Select Department</option>
                       <option value="IT">Information Technology</option>
                       <option value="HR">Human Resource</option>
                       <option value="Hr Manager">Hr Manager</option> */}
 
                       {id ? (
-                        <option value={employeeInfo.department}>
-                          {employeeInfo.department}
+                        <option value={employeeInfo.deptId}>
+                          {employeeInfo.deptName}
                         </option>
                       ) : (
                         <option value="0">Select Department</option>
                       )}
                       {departments &&
                         departments.map((item, index) => {
-                          console.log(departments);
                           return (
                             <>
-                              <option key={index} value={item.name}>
-                                {item.name}
+                              <option key={index} value={item.deptName}>
+                                {item.deptName}
                               </option>
                             </>
                           );
                         })}
                     </select>
+                    {formErrors.deptName && (
+                      <p className="custom-error-text">
+                        {formErrors.deptName}
+                      </p>
+                    )}
                   </div>
                   <div className="col-md-12">
                     <button type="submit" className="custom-button">
