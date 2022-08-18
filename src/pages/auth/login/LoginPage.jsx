@@ -8,6 +8,12 @@ import { useMediaQuery } from "@mui/material";
 import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import { hideLoading, showLoading } from "../../../redux/slices/homeSlice";
+import {
+  setData,
+  setisLoggedIn,
+  setloginData,
+  setUserType,
+} from "../../../redux/slices/loginSlice";
 
 const LoginPage = () => {
   const dispatch = useDispatch();
@@ -37,8 +43,19 @@ const LoginPage = () => {
     if (loginInfo.email == "admin" && loginInfo.password == "123") {
       // alert("correct login credentials.");
       dispatch(hideLoading());
+      dispatch(setUserType("admin"));
+      dispatch(setisLoggedIn(true));
       toast.success("logged in, redirecting to dashboard.");
       navigate("/employee-dashboard");
+    } else if (loginInfo.email == "ankit" && loginInfo.password == "123") {
+      // alert("correct login credentials.");
+      const employee_id = 1;
+      dispatch(hideLoading());
+      dispatch(setUserType("employee"));
+      dispatch(setisLoggedIn(true));
+      dispatch(setData({ employee_id: employee_id }));
+      toast.success("logged in, redirecting to dashboard.");
+      navigate(`/add-employee/${employee_id}`);
     } else {
       toast.error("incorrect creadentials.");
       dispatch(hideLoading());

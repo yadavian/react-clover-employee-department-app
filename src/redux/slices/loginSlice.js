@@ -3,7 +3,7 @@ import { createSlice, current } from "@reduxjs/toolkit";
 export const loginSlice = createSlice({
   name: "login",
   initialState: {
-    userType: "employee",
+    userType: "",
     data: [],
     isLoggedIn: false,
   },
@@ -13,13 +13,14 @@ export const loginSlice = createSlice({
       // console.log(current(state.data));
     },
     setUserType: (state, action) => {
-      state.data = action.payload;
+      state.userType = action.payload;
     },
     setisLoggedIn: (state, action) => {
-      state.data = action.payload;
+      state.isLoggedIn = action.payload;
     },
   },
 });
 
-export const { setloginData } = loginSlice.actions;
+export const { setloginData, setData, setUserType, setisLoggedIn } =
+  loginSlice.actions;
 export default loginSlice.reducer;

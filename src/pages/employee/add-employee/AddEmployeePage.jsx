@@ -17,7 +17,7 @@ import { getDepartments } from "../../../services/departmentService";
 import { designation } from "../../../data/employeeData";
 import toast from "react-hot-toast";
 import { hideLoading, showLoading } from "../../../redux/slices/homeSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const AddEmployeePage = () => {
   const dispatch = useDispatch();
@@ -25,16 +25,15 @@ const AddEmployeePage = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const [formErrors, setFormErrors] = useState({});
-
   const [departments, setDepartments] = useState([]);
-
   const [employeeInfo, setEmployeeInfo] = useState({
     empName: "",
     empDesignation: "",
     empSalary: "",
     deptName: "",
   });
-
+  const login = useSelector((state) => state.login);
+  const { userType } = login;
   console.log("employeeInfo => ", employeeInfo);
 
   const handleChange = (e) => {
@@ -44,16 +43,22 @@ const AddEmployeePage = () => {
   const validate = (values) => {
     let errors = {};
     console.log(values);
-    const regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    const nameRegex = /^[\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,}$/;
+    const salaryRegex = /^[1-9][0-9]*(\.[0-9])?/;
 
     if (!values.empName) {
       errors.empName = "Employee name required.";
+    } else if (nameRegex.test(values.empName) == false) {
+      errors.empName = "Invalid employee name.";
     }
 
     if (!values.empSalary) {
       errors.empSalary = "Employee Salary required.";
+    } else if (salaryRegex.test(values.empSalary) == false) {
+      errors.empSalary = "Invalid Salary.";
     }
-    console.log("values => ",values)
+
     if (values.empDesignation == "") {
       errors.empDesignation = "Designation required.";
     }
@@ -72,6 +77,7 @@ const AddEmployeePage = () => {
     // const isEmpty = await Object.keys(formErrors).length === 0;
     console.log(Object.keys(formErrors).length === 0);
     console.log(isEmpty);
+    console.log(id);
     // return;
     dispatch(showLoading());
 
@@ -82,7 +88,9 @@ const AddEmployeePage = () => {
           // alert("updated employee");
           toast.success("updated employee.");
           dispatch(hideLoading());
-          navigate("/employee-dashboard");
+          if (userType == "admin") {
+            navigate("/employee-dashboard");
+          }
         } else {
           // alert("something went wrong with update !");
           toast.error("something went wrong with update !");
@@ -154,15 +162,13 @@ const AddEmployeePage = () => {
                       onChange={handleChange}
                     />
                     {formErrors.empName && (
-                      <p className="custom-error-text">
-                        {formErrors.empName}
-                      </p>
+                      <p className="custom-error-text">{formErrors.empName}</p>
                     )}
                   </div>
                   <div className="col-md-6 input-container">
                     <label>Salary</label>
                     <input
-                      type="text"
+                      type="number"
                       name="empSalary"
                       value={employeeInfo.empSalary}
                       onChange={handleChange}
@@ -211,7 +217,7 @@ const AddEmployeePage = () => {
                       <option value="Hr Manager">Hr Manager</option> */}
 
                       {id ? (
-                        <option value={employeeInfo.deptId}>
+                        <option value={employeeInfo.deptName}>
                           {employeeInfo.deptName}
                         </option>
                       ) : (
@@ -229,9 +235,7 @@ const AddEmployeePage = () => {
                         })}
                     </select>
                     {formErrors.deptName && (
-                      <p className="custom-error-text">
-                        {formErrors.deptName}
-                      </p>
+                      <p className="custom-error-text">{formErrors.deptName}</p>
                     )}
                   </div>
                   <div className="col-md-12">

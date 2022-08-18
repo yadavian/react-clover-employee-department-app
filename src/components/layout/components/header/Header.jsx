@@ -3,12 +3,14 @@ import "./Header.css";
 import { CgMenuRight } from "react-icons/cg";
 import { Link, useLocation } from "react-router-dom";
 import { setActiveUserType } from "../../../../redux/slices/homeSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import DrawerComponent from "../drawer/DrawerComponent";
 
 const Header = () => {
   const location = useLocation();
   const dispatch = useDispatch();
+  const login = useSelector((state) => state.login);
+  const { data, userType } = login;
 
   const adminMenu = [
     {
@@ -39,24 +41,32 @@ const Header = () => {
     {
       id: 1,
       title: "Profile",
-      pathname: "/employee-dashboard",
+      pathname: `/add-employee/${data?.employee_id}`,
       className: `${
-        location.pathname == "/profile"
-          ? "sidebar-link-item-active"
-          : "sidebar-link-item"
+        (location.pathname == "/employee-dashboard" ||
+          location.pathname == `/add-employee/${1}`) &&
+        "navbar-item-active"
       }`,
+      userType: "employee",
     },
   ];
 
-  const isAdmin = true;
-  const menuToRendered = isAdmin ? adminMenu : employeeMenu;
+  // const isAdmin = false;
+  const menuToRendered = userType == "admin" ? adminMenu : employeeMenu;
 
   return (
     <>
-      <div className="navbar-section">
+      <div
+        className="navbar-section"
+        style={{ minWidth: `${userType == "employee" ? "100%" : "86%"}` }}
+      >
         <div className="navbar-logo">
           <a>
-            <Link to="/employee-dashboard">Clover Employee App</Link>
+            <Link
+              to={`${userType == "employee" ? "#" : "/employee-dashboard"}`}
+            >
+              Clover Employee App
+            </Link>
           </a>
         </div>
         <div className="navbar-right-box">

@@ -2,18 +2,24 @@
   "employees": [
     {
       "empName": "ankit",
-      "empDesignation": "Software Tester",
-      "empSalary": "2000",
-      "deptId": "",
-      "deptName": "Human Resources",
+      "empDesignation": "Software Engineer",
+      "empSalary": "900",
+      "deptName": "Information Technology",
       "id": 1
     },
     {
-      "empName": "ankit",
+      "empName": "suraj",
       "empDesignation": "Software Engineer",
-      "empSalary": "522",
-      "deptName": "Purchase Department",
+      "empSalary": "5000",
+      "deptName": "Information Technology",
       "id": 2
+    },
+    {
+      "empName": "urmila",
+      "empDesignation": "Java Developer",
+      "empSalary": "6000",
+      "deptName": "Purchase Department",
+      "id": 3
     }
   ],
   "department": [
